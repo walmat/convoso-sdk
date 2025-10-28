@@ -223,11 +223,21 @@ export interface CallLogsSearchResponse {
 }
 
 /**
- * Call Logs Get response (single record)
+ * Call Logs Update request parameters
  */
-export interface CallLogsGetResponse {
-  /** Success status */
+export interface CallLogsUpdateParams extends Record<string, unknown> {
+  /** Call Log ID */
+  call_log_id: string;
+
+  extra_field_01?: string;
+
+  extra_field_02?: string;
+
+}
+
+/**
+ * Call Logs Update response
+ */
+export interface CallLogsUpdateResponse {
   success?: boolean;
-  /** Call log data */
-  data?: CallLogData;
 }

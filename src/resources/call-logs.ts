@@ -3,6 +3,8 @@ import type {
   CallLogsSearchParams,
   CallLogsSearchResponse,
   CallLogsGetResponse,
+  CallLogsUpdateParams,
+  CallLogsUpdateResponse,
 } from "../types/call-logs.js";
 
 /**
@@ -96,10 +98,10 @@ export class CallLogsResource extends BaseResource {
    * const call = await client.callLogs.get("2073617");
    * ```
    */
-  async get(callId: string): Promise<CallLogsGetResponse> {
-    const query = this.normalizeParams({ id: callId });
+  async update(params: CallLogsUpdateParams): Promise<CallLogsUpdateResponse> {
+    const query = this.normalizeParams(params);
     return this.client.request({
-      path: `${this.basePath}/retrieve`,
+      path: `${this.basePath}/update`,
       query,
     });
   }
