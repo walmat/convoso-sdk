@@ -1,22 +1,7 @@
-import type { ApiError, ConvosoClientConfig, RequestOptions } from "../types/index.js";
+import { ConvosoApiError, type ConvosoClientConfig, type RequestOptions } from "../types/index.js";
 import { buildUrl, calculateBackoff, isRetryableError, sleep } from "../utils/index.js";
 
 const DEFAULT_BASE_URL = "https://api.convoso.com/v1/";
-
-/**
- * Custom error class for API errors
- */
-export class ConvosoApiError extends Error {
-  constructor(
-    message: string,
-    public readonly statusCode?: number,
-    public readonly code?: string,
-    public readonly details?: unknown,
-  ) {
-    super(message);
-    this.name = "ConvosoApiError";
-  }
-}
 
 /**
  * HTTP Client for making API requests with retry logic
@@ -123,12 +108,12 @@ export class HttpClient {
    * Handle error responses from the API
    */
   private async handleErrorResponse(response: Response): Promise<never> {
-    let errorData: ApiError | undefined;
+    let errorData: ConvosoApiError | undefined;
 
     try {
       const contentType = response.headers.get("content-type");
       if (contentType?.includes("application/json")) {
-        errorData = (await response.json()) as ApiError;
+        errorData = (await response.json()) as ConvosoApiError;
       }
     } catch {
       // Ignore JSON parsing errors

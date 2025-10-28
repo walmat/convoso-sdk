@@ -25,11 +25,29 @@ async function agentMonitorExample() {
     });
     console.log("Specific Agent:", userAgent);
 
-    // Logout multiple agents at once
-    // const logoutResult = await client.agentMonitor.logout({
-    //   user_id: [1002034, 1030483], // Array support!
-    //   force: true,
-    // });
+    // Logout multiple agents at once (demonstrates discriminated union type narrowing)
+    const logoutResult = await client.agentMonitor.logout({
+      user_id: [1002034, 1030483], // Array support!
+      force: true,
+    });
+
+    if (logoutResult.success) {
+      // TypeScript infers this as AgentMonitorLogoutResponseSuccess
+      console.log("Logged out agents:", logoutResult.logged_out_users);
+      console.log("Count:", logoutResult.count);
+      // logoutResult.code // ❌ TypeScript error - doesn't exist on success type
+    } else {
+      // TypeScript infers this as AgentMonitorLogoutResponseError
+      // You can narrow further by checking the specific error code
+      if (logoutResult.code === 6006) {
+        // TypeScript knows: text is exactly "No such User"
+        console.log("Error:", logoutResult.text); // ✅ Type is "No such User"
+      } else if (logoutResult.code === 6012) {
+        // TypeScript knows: text is exactly "Required fields are missing"
+        console.log("Error:", logoutResult.text); // ✅ Type is "Required fields are missing"
+      }
+      // logoutResult.count // ❌ TypeScript error - doesn't exist on error type
+    }
   } catch (error) {
     console.error("Error:", error);
   }

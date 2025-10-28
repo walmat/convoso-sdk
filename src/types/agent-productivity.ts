@@ -1,3 +1,5 @@
+import type { ConvosoErrorResponse } from "./index.js";
+
 /**
  * Agent Productivity Search request parameters
  *
@@ -103,11 +105,11 @@ export interface AgentProductivityData {
 }
 
 /**
- * Agent Productivity Search response
+ * Agent Productivity Search success response
  */
-export interface AgentProductivitySearchResponse {
+export interface AgentProductivitySearchResponseSuccess {
   /** Success status */
-  success?: boolean;
+  success: true;
   /** Response message */
   message?: string;
   /** List of agent productivity records */
@@ -126,3 +128,52 @@ export interface AgentProductivitySearchResponse {
     end?: string;
   };
 }
+
+/**
+ * Agent Productivity Search error definitions
+ */
+export type AgentProductivitySearchError =
+  | { code: 6031; text: "Missing Agents" }
+  | { code: 7231; text: "Invalid offset value" };
+
+/**
+ * Agent Productivity Search error response
+ *
+ * TypeScript will narrow the exact text when you check the code:
+ * - If code === 6031, then text is "Missing Agents"
+ * - If code === 7231, then text is "Invalid offset value"
+ */
+export type AgentProductivitySearchResponseError =
+  ConvosoErrorResponse<AgentProductivitySearchError>;
+
+/**
+ * Agent Productivity Search response (discriminated union)
+ *
+ * TypeScript will automatically narrow the type based on the `success` field:
+ *
+ * @example
+ * ```typescript
+ * const response = await client.agentProductivity.search({
+ *   date_start: "2025-01-01",
+ *   date_end: "2025-01-31",
+ * });
+ *
+ * if (response.success) {
+ *   // TypeScript knows this is AgentProductivitySearchResponseSuccess
+ *   console.log(response.data); // ✅ Valid
+ *   console.log(response.total); // ✅ Valid
+ *   // console.log(response.code); // ❌ Error - doesn't exist on success type
+ * } else {
+ *   // TypeScript knows this is AgentProductivitySearchResponseError
+ *   if (response.code === 6031) {
+ *     console.log(response.text); // ✅ Type is exactly "Missing Agents"
+ *   } else if (response.code === 7231) {
+ *     console.log(response.text); // ✅ Type is exactly "Invalid offset value"
+ *   }
+ *   // console.log(response.data); // ❌ Error - doesn't exist on error type
+ * }
+ * ```
+ */
+export type AgentProductivitySearchResponse =
+  | AgentProductivitySearchResponseSuccess
+  | AgentProductivitySearchResponseError;

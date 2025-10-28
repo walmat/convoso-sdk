@@ -1,8 +1,8 @@
-import { BaseResource } from "./base-resource.js";
 import type {
   AgentPerformanceSearchParams,
   AgentPerformanceSearchResponse,
 } from "../types/agent-performance.js";
+import { BaseResource } from "./base-resource.js";
 
 /**
  * Agent Performance API resource
@@ -66,9 +66,7 @@ export class AgentPerformanceResource extends BaseResource {
    * });
    * ```
    */
-  async search(
-    params?: AgentPerformanceSearchParams,
-  ): Promise<AgentPerformanceSearchResponse> {
+  async search(params?: AgentPerformanceSearchParams): Promise<AgentPerformanceSearchResponse> {
     return this.client.request({
       path: `${this.basePath}/search`,
       query: this.normalizeParams(params ?? {}),

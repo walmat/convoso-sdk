@@ -1,5 +1,3 @@
-import type { ConvosoClientConfig } from "../types/index.js";
-import { HttpClient } from "./http-client.js";
 import { AgentMonitorResource } from "../resources/agent-monitor.js";
 import { AgentPerformanceResource } from "../resources/agent-performance.js";
 import { AgentProductivityResource } from "../resources/agent-productivity.js";
@@ -16,6 +14,8 @@ import { SmsOptOutResource } from "../resources/sms-opt-out.js";
 import { StatusesResource } from "../resources/statuses.js";
 import { UserActivityResource } from "../resources/user-activity.js";
 import { UsersResource } from "../resources/users.js";
+import type { ConvosoClientConfig } from "../types/index.js";
+import { HttpClient } from "./http-client.js";
 
 /**
  * Main Convoso SDK Client

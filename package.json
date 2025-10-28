@@ -18,10 +18,7 @@
       }
     }
   },
-  "files": [
-    "dist",
-    "README.md"
-  ],
+  "files": ["dist", "README.md"],
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup",
@@ -35,13 +32,7 @@
     "prepublishOnly": "pnpm run build",
     "ci": "pnpm run lint && pnpm run typecheck && pnpm run test && pnpm run build"
   },
-  "keywords": [
-    "convoso",
-    "sdk",
-    "api",
-    "typescript",
-    "client"
-  ],
+  "keywords": ["convoso", "sdk", "api", "typescript", "client"],
   "author": "",
   "license": "MIT",
   "devDependencies": {

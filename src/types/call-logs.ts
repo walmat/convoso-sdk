@@ -1,3 +1,5 @@
+import type { ConvosoErrorResponse } from "./index.js";
+
 /**
  * Call type filter options
  */
@@ -202,11 +204,11 @@ export interface CallLogData {
 }
 
 /**
- * Call Logs Search response
+ * Call Logs Search success response
  */
-export interface CallLogsSearchResponse {
+export interface CallLogsSearchResponseSuccess {
   /** Success status */
-  success?: boolean;
+  success: true;
   /** Response data */
   data?: {
     /** Current offset */
@@ -223,6 +225,49 @@ export interface CallLogsSearchResponse {
 }
 
 /**
+ * Call Logs Search error definitions
+ */
+export type CallLogsSearchError =
+  | { code: 6002; text: "Unknown List Id" }
+  | { code: 6006; text: "Unknown User Id" }
+  | { code: 6004; text: "Unknown Campaign ID" }
+  | { code: 6030; text: "Unknown Queue ID" }
+  | { code: 7231; text: "Invalid offset value" };
+
+/**
+ * Call Logs Search error response
+ *
+ * TypeScript will narrow the exact text when you check the code:
+ * - If code === 6002, then text is "Unknown List Id"
+ * - If code === 6006, then text is "Unknown User Id"
+ * - If code === 6004, then text is "Unknown Campaign ID"
+ * - If code === 6030, then text is "Unknown Queue ID"
+ * - If code === 7231, then text is "Invalid offset value"
+ */
+export type CallLogsSearchResponseError = ConvosoErrorResponse<CallLogsSearchError>;
+
+/**
+ * Call Logs Search response (discriminated union)
+ *
+ * @example
+ * ```typescript
+ * const response = await client.callLogs.search({
+ *   call_type: "OUTBOUND",
+ *   date_start: "2025-01-01",
+ * });
+ *
+ * if (response.success) {
+ *   console.log(response.data?.results); // ✅ Valid
+ * } else {
+ *   if (response.code === 6004) {
+ *     console.log(response.text); // ✅ Type is exactly "Unknown Campaign ID"
+ *   }
+ * }
+ * ```
+ */
+export type CallLogsSearchResponse = CallLogsSearchResponseSuccess | CallLogsSearchResponseError;
+
+/**
  * Call Logs Update request parameters
  */
 export interface CallLogsUpdateParams extends Record<string, unknown> {
@@ -232,12 +277,51 @@ export interface CallLogsUpdateParams extends Record<string, unknown> {
   extra_field_01?: string;
 
   extra_field_02?: string;
-
 }
 
 /**
- * Call Logs Update response
+ * Call Logs Update success response
  */
-export interface CallLogsUpdateResponse {
-  success?: boolean;
+export interface CallLogsUpdateResponseSuccess {
+  /** Success status */
+  success: true;
 }
+
+/**
+ * Call Logs Update error definitions
+ */
+export type CallLogsUpdateError =
+  | { code: 6032; text: "Missing Call Log ID" }
+  | { code: 6033; text: "No such Call Log" }
+  | { code: 6035; text: "Either Extra Field 01 or Extra Field 02 need to have value" };
+
+/**
+ * Call Logs Update error response
+ *
+ * TypeScript will narrow the exact text when you check the code:
+ * - If code === 6032, then text is "Missing Call Log ID"
+ * - If code === 6033, then text is "No such Call Log"
+ * - If code === 6035, then text is "Either Extra Field 01 or Extra Field 02 need to have value"
+ */
+export type CallLogsUpdateResponseError = ConvosoErrorResponse<CallLogsUpdateError>;
+
+/**
+ * Call Logs Update response (discriminated union)
+ *
+ * @example
+ * ```typescript
+ * const response = await client.callLogs.update({
+ *   call_log_id: "12345",
+ *   extra_field_01: "value",
+ * });
+ *
+ * if (response.success) {
+ *   console.log("Call log updated successfully");
+ * } else {
+ *   if (response.code === 6033) {
+ *     console.log(response.text); // ✅ Type is exactly "No such Call Log"
+ *   }
+ * }
+ * ```
+ */
+export type CallLogsUpdateResponse = CallLogsUpdateResponseSuccess | CallLogsUpdateResponseError;

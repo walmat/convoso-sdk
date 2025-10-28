@@ -1,3 +1,5 @@
+import type { ConvosoErrorResponse } from "./index.js";
+
 /**
  * Agent Performance Search request parameters
  *
@@ -114,11 +116,11 @@ export interface AgentPerformanceMetrics {
 }
 
 /**
- * Agent Performance Search response
+ * Agent Performance Search success response
  */
-export interface AgentPerformanceSearchResponse {
+export interface AgentPerformanceSearchResponseSuccess {
   /** Success status */
-  success?: boolean;
+  success: true;
   /** Response message */
   message?: string;
   /** List of agent performance records */
@@ -131,3 +133,49 @@ export interface AgentPerformanceSearchResponse {
     end?: string;
   };
 }
+
+/**
+ * Agent Performance Search error definition
+ */
+export type AgentPerformanceSearchError = {
+  code: 6031;
+  text: "Missing Agents";
+};
+
+/**
+ * Agent Performance Search error response
+ *
+ * TypeScript will narrow the exact text when you check the code:
+ * - If code === 6031, then text is "Missing Agents"
+ */
+export type AgentPerformanceSearchResponseError = ConvosoErrorResponse<AgentPerformanceSearchError>;
+
+/**
+ * Agent Performance Search response (discriminated union)
+ *
+ * TypeScript will automatically narrow the type based on the `success` field:
+ *
+ * @example
+ * ```typescript
+ * const response = await client.agentPerformance.search({
+ *   date_start: "2025-01-01",
+ *   date_end: "2025-01-31",
+ * });
+ *
+ * if (response.success) {
+ *   // TypeScript knows this is AgentPerformanceSearchResponseSuccess
+ *   console.log(response.data); // ✅ Valid
+ *   console.log(response.total); // ✅ Valid
+ *   // console.log(response.code); // ❌ Error - doesn't exist on success type
+ * } else {
+ *   // TypeScript knows this is AgentPerformanceSearchResponseError
+ *   if (response.code === 6031) {
+ *     console.log(response.text); // ✅ Type is exactly "Missing Agents"
+ *   }
+ *   // console.log(response.data); // ❌ Error - doesn't exist on error type
+ * }
+ * ```
+ */
+export type AgentPerformanceSearchResponse =
+  | AgentPerformanceSearchResponseSuccess
+  | AgentPerformanceSearchResponseError;

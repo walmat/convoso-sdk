@@ -24,7 +24,8 @@
       "recommended": true,
       "complexity": {
         "noExcessiveCognitiveComplexity": "warn",
-        "noForEach": "off"
+        "noForEach": "off",
+        "useLiteralKeys": "off"
       },
       "style": {
         "useImportType": "error",

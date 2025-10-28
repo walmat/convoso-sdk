@@ -1,3 +1,5 @@
+import type { ConvosoErrorResponse } from "./index.js";
+
 /**
  * Agent Monitor Search request parameters
  *
@@ -134,11 +136,11 @@ export interface AgentMonitorLogoutParams extends Record<string, unknown> {
 }
 
 /**
- * Agent Monitor Logout response
+ * Agent Monitor Logout success response
  */
-export interface AgentMonitorLogoutResponse {
+export interface AgentMonitorLogoutResponseSuccess {
   /** Success status */
-  success?: boolean;
+  success: true;
   /** Response message */
   message?: string;
   /** Number of agents logged out */
@@ -146,3 +148,45 @@ export interface AgentMonitorLogoutResponse {
   /** List of user IDs that were logged out */
   logged_out_users?: number[];
 }
+
+/**
+ * Agent Monitor Logout error definitions
+ */
+export type AgentMonitorLogoutError =
+  | { code: 6006; text: "No such User" }
+  | { code: 6012; text: "Required fields are missing" };
+
+/**
+ * Agent Monitor Logout error response
+ *
+ * TypeScript will narrow the exact text when you check the code:
+ * - If code === 6006, then text is "No such User"
+ * - If code === 6012, then text is "Required fields are missing"
+ */
+export type AgentMonitorLogoutResponseError = ConvosoErrorResponse<AgentMonitorLogoutError>;
+
+/**
+ * Agent Monitor Logout response (discriminated union)
+ *
+ * TypeScript will automatically narrow the type based on the `success` field:
+ *
+ * @example
+ * ```typescript
+ * const response = await client.agentMonitor.logout({ user_id: 123 });
+ *
+ * if (response.success) {
+ *   // TypeScript knows this is AgentMonitorLogoutResponseSuccess
+ *   console.log(response.count); // ✅ Valid
+ *   console.log(response.logged_out_users); // ✅ Valid
+ *   // console.log(response.code); // ❌ Error - doesn't exist on success type
+ * } else {
+ *   // TypeScript knows this is AgentMonitorLogoutResponseError
+ *   console.log(response.code); // ✅ Valid
+ *   console.log(response.text); // ✅ Valid
+ *   // console.log(response.count); // ❌ Error - doesn't exist on error type
+ * }
+ * ```
+ */
+export type AgentMonitorLogoutResponse =
+  | AgentMonitorLogoutResponseSuccess
+  | AgentMonitorLogoutResponseError;

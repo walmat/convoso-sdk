@@ -1,10 +1,10 @@
-import { BaseResource } from "./base-resource.js";
 import type {
-  AgentMonitorSearchParams,
-  AgentMonitorSearchResponse,
   AgentMonitorLogoutParams,
   AgentMonitorLogoutResponse,
+  AgentMonitorSearchParams,
+  AgentMonitorSearchResponse,
 } from "../types/agent-monitor.js";
+import { BaseResource } from "./base-resource.js";
 
 /**
  * Agent Monitor API resource
@@ -68,9 +68,7 @@ export class AgentMonitorResource extends BaseResource {
    * });
    * ```
    */
-  async search(
-    params?: AgentMonitorSearchParams,
-  ): Promise<AgentMonitorSearchResponse> {
+  async search(params?: AgentMonitorSearchParams): Promise<AgentMonitorSearchResponse> {
     return this.client.request({
       path: `${this.basePath}/search`,
       query: this.normalizeParams(params ?? {}),
@@ -110,9 +108,7 @@ export class AgentMonitorResource extends BaseResource {
    * });
    * ```
    */
-  async logout(
-    params?: AgentMonitorLogoutParams,
-  ): Promise<AgentMonitorLogoutResponse> {
+  async logout(params?: AgentMonitorLogoutParams): Promise<AgentMonitorLogoutResponse> {
     return this.client.request({
       path: `${this.basePath}/logout`,
       query: this.normalizeParams(params ?? {}),

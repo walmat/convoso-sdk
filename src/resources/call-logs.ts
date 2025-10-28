@@ -1,11 +1,10 @@
-import { BaseResource } from "./base-resource.js";
 import type {
   CallLogsSearchParams,
   CallLogsSearchResponse,
-  CallLogsGetResponse,
   CallLogsUpdateParams,
   CallLogsUpdateResponse,
 } from "../types/call-logs.js";
+import { BaseResource } from "./base-resource.js";
 
 /**
  * Call Logs API resource

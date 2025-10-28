@@ -1,8 +1,8 @@
-import { BaseResource } from "./base-resource.js";
 import type {
   AgentProductivitySearchParams,
   AgentProductivitySearchResponse,
 } from "../types/agent-productivity.js";
+import { BaseResource } from "./base-resource.js";
 
 /**
  * Agent Productivity API resource
@@ -77,9 +77,7 @@ export class AgentProductivityResource extends BaseResource {
    * });
    * ```
    */
-  async search(
-    params?: AgentProductivitySearchParams,
-  ): Promise<AgentProductivitySearchResponse> {
+  async search(params?: AgentProductivitySearchParams): Promise<AgentProductivitySearchResponse> {
     return this.client.request({
       path: `${this.basePath}/search`,
       query: this.normalizeParams(this.applyPaginationValidation(params)),

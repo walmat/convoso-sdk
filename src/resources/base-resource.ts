@@ -33,7 +33,6 @@ export abstract class BaseResource {
   protected normalizeParams<T extends Record<string, unknown>>(
     params: T,
   ): Record<string, string | number | boolean | undefined> {
-
     const normalized: Record<string, string | number | boolean | undefined> = {};
     for (const [key, value] of Object.entries(params)) {
       if (Array.isArray(value)) {
@@ -86,11 +85,7 @@ export abstract class BaseResource {
    * this.validateLimit(undefined); // Returns 1000 (default)
    * ```
    */
-  protected validateLimit(
-    limit?: number,
-    max = 1000,
-    defaultLimit = 1000,
-  ): number {
+  protected validateLimit(limit?: number, max = 1000, defaultLimit = 1000): number {
     if (limit === undefined || limit === null) return defaultLimit;
     return Math.max(1, Math.min(limit, max));
   }
@@ -99,33 +94,52 @@ export abstract class BaseResource {
    * Apply pagination validation to parameters
    *
    * Automatically validates and normalizes offset and limit parameters
-   * according to Convoso API constraints.
+   * according to Convoso API constraints. Supports custom limits for
+   * endpoints with different pagination requirements.
    *
    * @param params - Parameters that may contain offset and limit
+   * @param options - Optional custom validation limits
+   * @param options.offsetMax - Maximum offset value (default: 50000)
+   * @param options.limitMax - Maximum limit value (default: 1000)
+   * @param options.limitDefault - Default limit if not provided (default: 1000)
    * @returns Parameters with validated offset and limit
    *
    * @example
    * ```typescript
-   * // Input
-   * { offset: -10, limit: 5000, other: "value" }
+   * // Standard pagination
+   * const params = this.applyPaginationValidation({ offset: -10, limit: 5000 });
+   * // Result: { offset: 0, limit: 1000 }
    *
-   * // Output
-   * { offset: 0, limit: 1000, other: "value" }
+   * // Custom pagination (e.g., callbacks search with max 5000)
+   * const params = this.applyPaginationValidation(
+   *   { offset: 100, limit: 3000 },
+   *   { limitMax: 5000, limitDefault: 20 }
+   * );
+   * // Result: { offset: 100, limit: 3000 }
    * ```
    */
   protected applyPaginationValidation(
     params?: Record<string, unknown>,
+    options?: {
+      offsetMax?: number;
+      limitMax?: number;
+      limitDefault?: number;
+    },
   ): Record<string, unknown> {
     if (!params) return {};
 
     const validated = { ...params };
 
-    if ("offset" in validated && typeof validated['offset'] === "number") {
-      validated['offset'] = this.validateOffset(validated['offset']);
+    if ("offset" in validated && typeof validated["offset"] === "number") {
+      validated["offset"] = this.validateOffset(validated["offset"], options?.offsetMax);
     }
 
-    if ("limit" in validated && typeof validated['limit'] === "number") {
-      validated['limit'] = this.validateLimit(validated['limit']);
+    if ("limit" in validated && typeof validated["limit"] === "number") {
+      validated["limit"] = this.validateLimit(
+        validated["limit"],
+        options?.limitMax,
+        options?.limitDefault,
+      );
     }
 
     return validated;
