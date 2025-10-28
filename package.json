@@ -35,6 +35,14 @@
   "keywords": ["convoso", "sdk", "api", "typescript", "client"],
   "author": "",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/walmat/convoso-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/walmat/convoso-sdk/issues"
+  },
+  "homepage": "https://github.com/walmat/convoso-sdk#readme",
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@types/node": "^22.10.2",
