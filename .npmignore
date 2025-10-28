@@ -1,0 +1,31 @@
+# Source files
+src/
+tests/
+examples/
+
+# Configuration
+tsconfig.json
+tsup.config.ts
+vitest.config.ts
+biome.json
+.gitignore
+.npmignore
+
+# Development
+node_modules/
+.vscode/
+.idea/
+
+# Testing
+coverage/
+*.test.ts
+*.spec.ts
+
+# Build artifacts
+*.tsbuildinfo
+
+# Documentation (keep README.md)
+docs/
+
+# CI/CD
+.github/
