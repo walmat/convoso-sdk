@@ -88,7 +88,9 @@ async function leadsExample() {
     console.log("Leads:", leads);
 
     // Get specific lead
-    const lead = await client.leads.get(789);
+    const lead = await client.leads.search({
+      lead_id: 789,
+    });
     console.log("Lead Details:", lead);
 
     // Update lead
@@ -104,11 +106,12 @@ async function leadsExample() {
 // Example: Lead Post - Create new leads
 async function leadPostExample() {
   try {
-    const result = await client.leadPost.create({
+    const result = await client.leadPost.insert({
+      criteria_key: "123123",
+      phone_number: "234567890",
+      phone_code: "1",
       first_name: "John",
       last_name: "Doe",
-      phone: "1234567890",
-      campaign_id: 123,
     });
     console.log("Lead Created:", result);
   } catch (error) {
@@ -119,11 +122,13 @@ async function leadPostExample() {
 // Example: Users - Manage users
 async function usersExample() {
   try {
-    const users = await client.users.list();
+    const users = await client.users.search();
     console.log("Users:", users);
 
     // Get specific user
-    const user = await client.users.get(456);
+    const user = await client.users.search({
+      user_id: 456,
+    });
     console.log("User Details:", user);
   } catch (error) {
     console.error("Error:", error);
@@ -141,7 +146,8 @@ async function dncExample() {
 
     // Search DNC list
     const dncList = await client.dnc.search({
-      phone: "1234567890",
+      phone_code: "1",
+      phone_number: "234567890",
     });
     console.log("DNC List:", dncList);
   } catch (error) {
@@ -223,10 +229,9 @@ async function agentProductivityExample() {
 // Example: Revenue - Get revenue reports
 async function revenueExample() {
   try {
-    const revenue = await client.revenue.report({
-      campaign_id: 123,
-      start_date: "2025-01-01",
-      end_date: "2025-01-31",
+    const revenue = await client.revenue.update({
+      call_log_id: "123",
+      revenue: 123.12,
     });
     console.log("Revenue Report:", revenue);
   } catch (error) {

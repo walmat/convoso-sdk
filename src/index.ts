@@ -10,6 +10,9 @@ export {
   type RequestOptions,
 } from "./types/index.js";
 
+// Utilities
+export { normalizeHexColor } from "./utils/hex-color.js";
+
 // Resources
 export { BaseResource } from "./resources/base-resource.js";
 export { AgentMonitorResource } from "./resources/agent-monitor.js";
@@ -99,11 +102,98 @@ export type {
   LeadRecordingData,
 } from "./types/leads.js";
 export { ListsResource } from "./resources/lists.js";
+export type {
+  ListsInsertParams,
+  ListsInsertResponse,
+  ListsInsertResponseSuccess,
+  ListsInsertResponseError,
+  ListsInsertError,
+  ListsUpdateParams,
+  ListsUpdateResponse,
+  ListsUpdateResponseSuccess,
+  ListsUpdateResponseError,
+  ListsUpdateError,
+  ListsDeleteParams,
+  ListsDeleteResponse,
+  ListsDeleteResponseSuccess,
+  ListsDeleteResponseError,
+  ListsDeleteError,
+  ListsSearchParams,
+  ListsSearchResponse,
+  ListsSearchResponseSuccess,
+  ListsSearchResponseError,
+  ListsSearchError,
+  ListItem,
+  ListDateTime,
+} from "./types/lists.js";
 export { RevenueResource } from "./resources/revenue.js";
+export type {
+  RevenueUpdateParams,
+  RevenueUpdateResponse,
+  RevenueUpdateResponseSuccess,
+  RevenueUpdateResponseError,
+  RevenueUpdateError,
+} from "./types/revenue.js";
 export { SmsOptOutResource } from "./resources/sms-opt-out.js";
+export type {
+  SmsOptOutInsertParams,
+  SmsOptOutInsertResponse,
+  SmsOptOutInsertResponseSuccess,
+  SmsOptOutInsertResponseError,
+  SmsOptOutInsertError,
+  SmsOptOutUpdateParams,
+  SmsOptOutUpdateResponse,
+  SmsOptOutUpdateResponseSuccess,
+  SmsOptOutUpdateResponseError,
+  SmsOptOutUpdateError,
+  SmsOptOutSearchParams,
+  SmsOptOutSearchResponse,
+  SmsOptOutSearchResponseSuccess,
+  SmsOptOutSearchResponseError,
+  SmsOptOutSearchError,
+  SmsOptOutData,
+  SmsOptOutPurpose,
+  SmsOptOutReason,
+} from "./types/sms-opt-out.js";
 export { StatusesResource } from "./resources/statuses.js";
+export type {
+  StatusesInsertParams,
+  StatusesInsertResponse,
+  StatusesInsertResponseSuccess,
+  StatusesInsertResponseError,
+  StatusesInsertError,
+  StatusesUpdateParams,
+  StatusesUpdateResponse,
+  StatusesUpdateResponseSuccess,
+  StatusesUpdateResponseError,
+  StatusesUpdateError,
+  StatusesSearchParams,
+  StatusesSearchResponse,
+  StatusesSearchResponseSuccess,
+  StatusData,
+  YesNo,
+} from "./types/statuses.js";
 export { UserActivityResource } from "./resources/user-activity.js";
+export type {
+  UserActivitySearchParams,
+  UserActivitySearchResponse,
+  UserActivitySearchResponseSuccess,
+} from "./types/user-activity.js";
 export { UsersResource } from "./resources/users.js";
+export type {
+  UsersRecordingsParams,
+  UsersRecordingsResponse,
+  UsersRecordingsResponseSuccess,
+  UsersRecordingsResponseError,
+  UsersRecordingsError,
+  UserRecordingData,
+  UsersSearchParams,
+  UsersSearchResponse,
+  UsersSearchResponseSuccess,
+  UsersSearchResponseError,
+  UsersSearchError,
+  UserData,
+} from "./types/users.js";
 
 // Resource Types
 export type {

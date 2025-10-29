@@ -213,7 +213,7 @@ export interface DncSearchParams extends Record<string, unknown> {
   limit?: number;
 
   /** DNC purpose */
-  purpose:
+  purpose?:
     | "-BLANK-"
     | "-NOTBLANK-"
     | "COLLECT"
@@ -231,7 +231,7 @@ export interface DncSearchParams extends Record<string, unknown> {
     | (string & {});
 
   /** DNC reason */
-  reason: "-BLANK-" | "-NOTBLANK-" | "DNC" | "DNCT" | "ConsentRevoked" | (string & {});
+  reason?: "-BLANK-" | "-NOTBLANK-" | "DNC" | "DNCT" | "ConsentRevoked" | (string & {});
 }
 
 /**
