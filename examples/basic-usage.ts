@@ -122,14 +122,14 @@ async function leadPostExample() {
 // Example: Users - Manage users
 async function usersExample() {
   try {
-    const users = await client.users.search();
+    const users = await client.users.search({ limit: 1000 });
     console.log("Users:", users);
 
     // Get specific user
-    const user = await client.users.search({
-      user_id: 456,
-    });
-    console.log("User Details:", user);
+    // const user = await client.users.search({
+    //   user_id: 456,
+    // });
+    // console.log("User Details:", user);
   } catch (error) {
     console.error("Error:", error);
   }
@@ -241,11 +241,11 @@ async function revenueExample() {
 
 // Run examples (uncomment the ones you want to test)
 // agentMonitorExample();
-callLogsExample();
+// callLogsExample();
 // campaignsExample();
 // leadsExample();
 // leadPostExample();
-// usersExample();
+usersExample();
 // dncExample();
 // agentPerformanceExample();
 // agentProductivityExample();

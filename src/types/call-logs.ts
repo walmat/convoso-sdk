@@ -183,8 +183,8 @@ export interface CallLogData {
   call_date?: string;
   /** Agent's comment on the call */
   agent_comment?: string | null;
-  /** Queue ID (if applicable) */
-  queue_id?: string | null;
+  /** Queue name (if applicable) */
+  queue: string | null;
   /** Number of times this lead has been called */
   called_count?: string;
   /** Caller ID displayed to the recipient */
