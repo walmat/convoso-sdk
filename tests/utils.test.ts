@@ -53,7 +53,6 @@ describe("buildUrl", () => {
   it("should skip undefined query parameters", () => {
     const url = buildUrl("https://api.example.com", "test-key", "/leads", {
       campaign_id: "123",
-      // biome-ignore lint/style/useNamingConvention: testing undefined value
       undefined_param: undefined,
       limit: 100,
     });

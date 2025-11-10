@@ -98,7 +98,6 @@ describe("BaseResource", () => {
 
     it("should preserve undefined values", () => {
       const result = resource.testNormalizeParams({
-        // biome-ignore lint/style/useNamingConvention: testing undefined
         optional_param: undefined,
       });
       expect(result).toEqual({ optional_param: undefined });
@@ -110,7 +109,6 @@ describe("BaseResource", () => {
         user_id: 123,
         email: "test@example.com",
         active: true,
-        // biome-ignore lint/style/useNamingConvention: testing undefined
         optional_param: undefined,
       });
       expect(result).toEqual({
@@ -124,7 +122,6 @@ describe("BaseResource", () => {
 
     it("should skip null values", () => {
       const result = resource.testNormalizeParams({
-        // biome-ignore lint/style/useNamingConvention: testing null
         null_param: null,
         valid: "test",
       });
