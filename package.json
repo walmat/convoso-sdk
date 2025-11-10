@@ -1,6 +1,6 @@
 {
   "name": "@convoso/sdk",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Modern TypeScript SDK for Convoso API",
   "type": "module",
   "main": "./dist/index.cjs",
